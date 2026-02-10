@@ -1,14 +1,3 @@
-const WIN_PATTERNS = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-];
-
 const gameBoard = (function () {
     const board = [
         ["0", "0", "0"],
@@ -16,7 +5,7 @@ const gameBoard = (function () {
         ["0", "0", "0"]
     ];
 
-    const getBoard = () => board;
+    const getBoard = () => board.map(row => [...row]);
 
     const placeMark = (row, col, mark) => {
         if (board[row][col] === "0") {
@@ -26,24 +15,13 @@ const gameBoard = (function () {
 
     const returnMark = (row, col) => board[row][col];
 
-    const hasWinner = () => {
-        console.log(board);
-        for (const [a, b, c] of WIN_PATTERNS) {
-            if (board[a] !== "0" && board[a] === board[b] && board[a] === board[c]) {
-                console.log("WIN ON", a, b, c, "VALUES:", board[a], board[b], board[c]);
-                return true;
-            }
-        }
-        return false;
-    } // ==> buggy
-
-    return { getBoard, placeMark, returnMark, hasWinner };
+    return { getBoard, placeMark, returnMark };
 })();
 
 const createPlayer = (name, mark) => {
     let wins = 0;
 
-    const player = { name, mark }
+    const player = { name, mark };
 
     const getPlayerInfo = () => player;
     const getWins = () => wins;
@@ -52,56 +30,73 @@ const createPlayer = (name, mark) => {
     return { getPlayerInfo, getWins, addWin };
 };
 
-function playGame() {
-    console.log(gameBoard.getBoard());
+const game = (function () {
+    let winner = "";
 
-    let playerName1 = prompt("Add player's name (X mark): ");
-    let playerName2 = prompt("Add player's name (O mark): ");
+    const hasWinner = (row, col) => {
+        const board = gameBoard.getBoard();
+        const mark = gameBoard.returnMark(row, col);
+        const size = board.length;
 
-    let playerX = createPlayer(playerName1, "X");
-    let playerO = createPlayer(playerName2, "O");
+        if (board[row].every(cell => cell === mark)) { winner = mark; return true; }
 
-    let endGame = false;
+        if (board.every(r => r[col] === mark)) { winner = mark; return true; }
 
-    let winner;
+        if (row === col && board.every((r, i) => r[i] === mark)) { winner = mark; return true; }
 
-    while (!endGame) {
-        let moveX = prompt("Make your move (row, col, mark)");
-        moveX = moveX.split(", ");
-        console.log("Player X: ", playerX.getPlayerInfo(), playerO.getPlayerInfo(), moveX);
+        if (row + col === size - 1 && board.every((r, i) => r[size - 1 - i] === mark)) { winner = mark; return true; }
 
-        gameBoard.placeMark(moveX[0], moveX[1], moveX[2]);
+        return false;
+    };
 
-        if (gameBoard.hasWinner()) {
-            endGame = true;
-            playerX.addWin();
+    const returnWinner = () => winner;
 
-            winner = playerX.mark;
+    const newTurn = () => {
+        let move = prompt("Make your move (row, col, mark)");
+        move = move.split(", ");
 
-            break;
+        const row = Number(move[0]);
+        const col = Number(move[1]);
+        const mark = move[2];
+
+        gameBoard.placeMark(row, col, mark);
+
+        return [row, col];
+    };
+
+    const play = () => {
+        let playerName1 = prompt("Add player's name (X mark): ");
+        let playerName2 = prompt("Add player's name (O mark): ");
+
+        let playerX = createPlayer(playerName1, "X");
+        let playerO = createPlayer(playerName2, "O");
+
+        let endGame = false;
+        winner = "";
+
+        while (!endGame) {
+            const board = gameBoard.getBoard();
+
+            let move = newTurn();
+
+            console.log(board);
+
+            if (hasWinner(move[0], move[1])) {
+                endGame = true;
+                break;
+            }
+
+            if (!board.some(row => row.some(cell => cell === "0"))) {
+                winner = "Draw";
+                break;
+            }
         }
 
-        let moveO = prompt("Make your move (row, col, mark)");
-        moveO = moveO.split(", ");
-        console.log("Player O: ", playerX.getPlayerInfo(), playerO.getPlayerInfo(), moveO);
+        console.log("Winner is ", winner);
+    };
 
-        gameBoard.placeMark(moveO[0], moveO[1], moveO[2]);
+    return { play, hasWinner, returnWinner };
 
-        if (gameBoard.hasWinner()) {
-            endGame = true;
-            playerO.addWin();
+})();
 
-            winner = playerO.mark;
-        }
-
-        let board = gameBoard.getBoard();
-        if (!board.some(a => a === "0") && !gameBoard.hasWinner()) {
-            winner = "Draw";
-            break;
-        }
-    }
-
-    console.log(winner);
-}
-
-playGame();
+game.play();
