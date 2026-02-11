@@ -1,3 +1,6 @@
+let playerX;
+let playerO;
+
 const gameBoard = (function () {
     const board = [
         ["0", "0", "0"],
@@ -23,15 +26,16 @@ const createPlayer = (name, mark) => {
 
     const player = { name, mark };
 
-    const getPlayerInfo = () => player;
+    const getPlayerName = () => player.name;
+    const getPlayerMark = () => player.mark;
     const getWins = () => wins;
     const addWin = () => { wins++; };
 
-    return { getPlayerInfo, getWins, addWin };
+    return { getPlayerName, getPlayerMark, getWins, addWin };
 };
 
 const game = (function () {
-    let winner = "";
+    let winner = "", endGame = false, currentTurn = "X";
 
     const hasWinner = (row, col) => {
         const board = gameBoard.getBoard();
@@ -51,52 +55,39 @@ const game = (function () {
 
     const returnWinner = () => winner;
 
-    const newTurn = () => {
-        let move = prompt("Make your move (row, col, mark)");
-        move = move.split(", ");
-
-        const row = Number(move[0]);
-        const col = Number(move[1]);
-        const mark = move[2];
+    const newTurn = (e) => {
+        const row = Number(e.currentTarget.dataset.row);
+        const col = Number(e.currentTarget.dataset.col);
+        const mark = currentTurn;
 
         gameBoard.placeMark(row, col, mark);
+        renderBoard.placeMark(row, col, mark)
 
-        return [row, col];
-    };
+        if (hasWinner(row, col)) {
+            endGame = true;
+            winner = gameBoard.returnMark(row, col);
+        }
 
-    const play = () => {
-        let playerName1 = prompt("Add player's name (X mark): ");
-        let playerName2 = prompt("Add player's name (O mark): ");
-
-        let playerX = createPlayer(playerName1, "X");
-        let playerO = createPlayer(playerName2, "O");
-
-        let endGame = false;
-        winner = "";
-
-        while (!endGame) {
+        if (endGame) gameEnd();
+        else {
             const board = gameBoard.getBoard();
-
-            let move = newTurn();
-
-            console.log(board);
-
-            if (hasWinner(move[0], move[1])) {
-                endGame = true;
-                break;
-            }
 
             if (!board.some(row => row.some(cell => cell === "0"))) {
                 winner = "Draw";
-                break;
             }
+
+            currentTurn = currentTurn === "X" ? "O" : "X";
+        }
+    };
+
+    const gameEnd = () => {
+        for (const button of document.querySelectorAll("#board button")) {
+            if (!button.disabled) button.disabled = true;
         }
 
         console.log("Winner is ", winner);
-    };
+    }
 
-    return { play, hasWinner, returnWinner };
+    return { newTurn, hasWinner, returnWinner };
 
 })();
-
-game.play();

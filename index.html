@@ -1,11 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
     <title>Tic-Tac-Toe</title>
 </head>
+
 <body>
-    <script src="./main.js"></script>
+    <header>
+        <h1>Tic-Tac-Toe</h1>
+    </header>
+    <main>
+        <div id="main">
+            <button id="start-game">Start game</button>
+
+            <div id="playerX" class="set-player inactive">
+                <label for="player-x">Add player X name</label>
+                <input type="text" name="player-x" id="player-x">
+                <button id="player-x-btn">Create player</button>
+            </div>
+
+            <div id="board" class="main-board inactive"></div>
+
+            <div id="playerO" class="set-player inactive">
+                <label for="player-o">Add player O name</label>
+                <input type="text" name="player-o" id="player-o">
+                <button id="player-o-btn">Create player</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="./scripts/rendering.js"></script>
+    <script src="./scripts/main.js"></script>
+    <script src="./scripts/btnsListeners.js"></script>
 </body>
+
 </html>

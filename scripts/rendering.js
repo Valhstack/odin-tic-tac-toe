@@ -1,0 +1,29 @@
+const renderBoard = (function () {
+    const board = document.getElementById("board");
+
+    const generate = () => {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                let button = document.createElement("button");
+                button.classList.add("board-btn");
+                button.dataset.row = i;
+                button.dataset.col = j;
+
+                button.addEventListener("click", (e) => {
+                    game.newTurn(e);
+                    button.disabled = true;
+                });
+
+                board.insertAdjacentElement("beforeend", button);
+            }
+        }
+    };
+
+    const placeMark = (row, col, mark) => {
+        for (const button of document.querySelectorAll("#board button")) {
+            if (button.dataset.row == row && button.dataset.col == col) button.textContent = mark;
+        }
+    };
+
+    return { generate, placeMark };
+})();

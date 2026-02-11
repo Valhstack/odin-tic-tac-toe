@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+}
+
+#main {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.main-board {
+    border: 1px solid black;
+
+    width: 300px;
+    height: 300px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.set-player {
+    display: flex;
+    flex-direction: column;
+}
+
+.inactive {
+    display: none;
+}
