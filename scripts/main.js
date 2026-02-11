@@ -66,6 +66,8 @@ const game = (function () {
         if (hasWinner(row, col)) {
             endGame = true;
             winner = gameBoard.returnMark(row, col);
+
+            winner === "X" ? playerX.addWin() : playerO.addWin();
         }
 
         if (endGame) gameEnd();
@@ -85,7 +87,7 @@ const game = (function () {
             if (!button.disabled) button.disabled = true;
         }
 
-        console.log("Winner is ", winner);
+        renderBoard.showWinner(winner);
     }
 
     return { newTurn, hasWinner, returnWinner };

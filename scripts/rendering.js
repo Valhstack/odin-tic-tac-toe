@@ -25,5 +25,10 @@ const renderBoard = (function () {
         }
     };
 
-    return { generate, placeMark };
+    const showWinner = (winner) => {
+        document.getElementById("winner-dialog-text").textContent = winner === "Draw" ? "It's a draw" : `Winner is ${winner}`;
+        document.getElementById("winner-dialog").showModal();
+    };
+
+    return { generate, placeMark, showWinner };
 })();

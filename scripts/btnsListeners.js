@@ -25,5 +25,11 @@ document.getElementById("player-o-btn").addEventListener("click", () => {
         document.getElementById("board").classList.remove("inactive");
 
         renderBoard.generate();
+
+        document.getElementById("control-btns").classList.remove("inactive");
     }
+});
+
+document.getElementById("close-dialog").addEventListener("click", () => {
+    document.getElementById("winner-dialog").close();
 });
