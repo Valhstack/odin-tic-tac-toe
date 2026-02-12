@@ -30,5 +30,16 @@ const renderBoard = (function () {
         document.getElementById("winner-dialog").showModal();
     };
 
-    return { generate, placeMark, showWinner };
+    const reset = () => {
+        for (const button of document.querySelectorAll("#board button")) {
+            button.disabled = false;
+            button.textContent = ""
+        }
+    };
+
+    const remove = () => {
+        document.getElementById("board").replaceChildren();
+    };
+
+    return { generate, placeMark, showWinner, reset, remove };
 })();

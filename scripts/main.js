@@ -18,7 +18,15 @@ const gameBoard = (function () {
 
     const returnMark = (row, col) => board[row][col];
 
-    return { getBoard, placeMark, returnMark };
+    const resetBoard = () => {
+        for (let row in board) {
+            for (let col in board[row]) {
+                board[row][col] = "0";
+            }
+        }
+    };
+
+    return { getBoard, placeMark, returnMark, resetBoard };
 })();
 
 const createPlayer = (name, mark) => {
@@ -87,8 +95,12 @@ const game = (function () {
             if (!button.disabled) button.disabled = true;
         }
 
+        document.getElementById("reset-new-game-btn-label").textContent = "New Game";
+
         renderBoard.showWinner(winner);
-    }
+
+        endGame = false;
+    };
 
     return { newTurn, hasWinner, returnWinner };
 

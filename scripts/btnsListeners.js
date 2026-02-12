@@ -33,3 +33,21 @@ document.getElementById("player-o-btn").addEventListener("click", () => {
 document.getElementById("close-dialog").addEventListener("click", () => {
     document.getElementById("winner-dialog").close();
 });
+
+document.getElementById("reset-new-game-btn").addEventListener("click", () => {
+    if (document.getElementById("reset-new-game-btn-label").textContent === "New Game") {
+        document.getElementById("reset-new-game-btn-label").textContent = "Reset Game"
+    }
+    renderBoard.reset();
+    gameBoard.resetBoard();
+});
+
+document.getElementById("change-players-btn").addEventListener("click", () => {
+    renderBoard.reset();
+    gameBoard.resetBoard();
+    renderBoard.remove();
+
+    document.getElementById("board").classList.add("inactive");
+    document.getElementById("playerX").classList.remove("inactive");
+    document.getElementById("control-btns").classList.add("inactive");
+});
