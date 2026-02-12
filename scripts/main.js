@@ -91,11 +91,8 @@ const game = (function () {
     };
 
     const gameEnd = () => {
-        for (const button of document.querySelectorAll("#board button")) {
-            if (!button.disabled) button.disabled = true;
-        }
-
-        document.getElementById("reset-new-game-btn-label").textContent = "New Game";
+        renderBoard.disableBoard();
+        renderBoard.updateResetBtn();
 
         renderBoard.showWinner(winner);
 

@@ -37,9 +37,19 @@ const renderBoard = (function () {
         }
     };
 
+    const disableBoard = () => {
+        for (const button of document.querySelectorAll("#board button")) {
+            if (!button.disabled) button.disabled = true;
+        }
+    }
+
+    const updateResetBtn = () => {
+        document.getElementById("reset-new-game-btn-label").textContent = "New Game";
+    }
+
     const remove = () => {
         document.getElementById("board").replaceChildren();
     };
 
-    return { generate, placeMark, showWinner, reset, remove };
+    return { generate, placeMark, showWinner, reset, remove, disableBoard, updateResetBtn };
 })();
