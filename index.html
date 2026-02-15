@@ -14,25 +14,31 @@
     </header>
     <main>
         <div id="main">
-            <button id="start-game">Start game</button>
+            <button id="start-game" class="primary-btn">Start game</button>
 
             <div id="playerX" class="set-player inactive">
                 <label for="player-x">Add player X name</label>
                 <input type="text" name="player-x" id="player-x">
-                <button id="player-x-btn">Create player</button>
+                <button id="player-x-btn" class="primary-btn player-btn">Create player</button>
             </div>
-
-            <div id="board" class="main-board inactive"></div>
 
             <div id="playerO" class="set-player inactive">
                 <label for="player-o">Add player O name</label>
                 <input type="text" name="player-o" id="player-o">
-                <button id="player-o-btn">Create player</button>
+                <button id="player-o-btn" class="primary-btn player-btn">Create player</button>
             </div>
 
-            <div id="control-btns" class="inactive">
-                <button id="reset-new-game-btn"><span id="reset-new-game-btn-label">Reset Game</span></button>
-                <button id="change-players-btn">Change players</button>
+            <div class="main-scores-and-board">
+                <div class="board-and-buttons">
+                    <p id="turn-announcement" class="inactive"><span id="turn-announcement-mark">X</span>'s turn</p>
+                    <div id="board" class="main-board inactive"></div>
+
+                    <div id="control-btns" class="inactive">
+                        <button id="reset-new-game-btn" class="control-btn"><span id="reset-new-game-btn-label">Reset Game</span></button>
+                        <button id="change-players-btn" class="control-btn">Change players</button>
+                    </div>
+
+                </div>
             </div>
 
             <dialog id="winner-dialog">

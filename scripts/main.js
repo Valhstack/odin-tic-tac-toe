@@ -50,15 +50,27 @@ const game = (function () {
         const mark = gameBoard.returnMark(row, col);
         const size = board.length;
 
-        if (board[row].every(cell => cell === mark)) { winner = mark; return true; }
+        if (board[row].every(cell => cell === mark)) {
+            winner = mark;
+            return board[row].map((_, c) => [row, c]);
+        }
 
-        if (board.every(r => r[col] === mark)) { winner = mark; return true; }
+        if (board.every(r => r[col] === mark)) {
+            winner = mark;
+            return board.map((_, r) => [r, col]);
+        }
 
-        if (row === col && board.every((r, i) => r[i] === mark)) { winner = mark; return true; }
+        if (row === col && board.every((r, i) => r[i] === mark)) {
+            winner = mark;
+            return board.map((_, i) => [i, i]);
+        }
 
-        if (row + col === size - 1 && board.every((r, i) => r[size - 1 - i] === mark)) { winner = mark; return true; }
+        if (row + col === size - 1 && board.every((r, i) => r[size - 1 - i] === mark)) {
+            winner = mark;
+            return board.map((_, i) => [i, size - 1 - i]);
+        }
 
-        return false;
+        return null;
     };
 
     const returnWinner = () => winner;
@@ -69,11 +81,13 @@ const game = (function () {
         const mark = currentTurn;
 
         gameBoard.placeMark(row, col, mark);
-        renderBoard.placeMark(row, col, mark)
+        renderBoard.placeMark(row, col, mark);
 
-        if (hasWinner(row, col)) {
+        const cells = hasWinner(row, col);
+
+        if (cells) {
             endGame = true;
-            winner = gameBoard.returnMark(row, col);
+            renderBoard.highlightWinner(cells);
 
             winner === "X" ? playerX.addWin() : playerO.addWin();
         }
@@ -84,9 +98,11 @@ const game = (function () {
 
             if (!board.some(row => row.some(cell => cell === "0"))) {
                 winner = "Draw";
+                gameEnd();
             }
 
             currentTurn = currentTurn === "X" ? "O" : "X";
+            renderBoard.announceTurn(currentTurn);
         }
     };
 

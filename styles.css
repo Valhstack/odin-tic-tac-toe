@@ -1,5 +1,49 @@
+@font-face {
+    font-family: "Raleway";
+    src: url(./fonts/Raleway-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: "Lato";
+    src: url(./fonts/Lato-Regular.ttf);
+}
+
 * {
     box-sizing: border-box;
+}
+
+p,
+h1 {
+    margin: 0;
+}
+
+body {
+    background-color: #243447;
+
+    font-family: "Lato";
+    font-weight: 400;
+    font-size: 16px;
+
+    color: #F5F5F5;
+}
+
+input[type="text"] {
+    background-color: #30475E;
+    border: 1px solid #3F5B78;
+    border-radius: 8px;
+
+    padding: 14px 12px;
+
+    color: #F5F5F5;
+    font-size: 16px;
+
+    max-height: 40px;
+
+    max-width: 320px;
+}
+
+label {
+    font-size: 20px;
 }
 
 #main {
@@ -7,12 +51,24 @@
 
     align-items: center;
     justify-content: center;
+}
 
+.board-and-buttons {
+    display: flex;
     flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.main-scores-and-board {
+    display: flex;
+
+    justify-content: space-between;
 }
 
 .main-board {
-    border: 1px solid black;
+    border: 1px solid #3A506B;
 
     width: 300px;
     height: 300px;
@@ -25,8 +81,57 @@
 .set-player {
     display: flex;
     flex-direction: column;
+
+    align-items: center;
+
+    gap: 8px;
 }
 
 .inactive {
     display: none;
+}
+
+.primary-btn {
+    background-color: #2E4158;
+    color: #F5F5F5;
+
+    font-size: 18px;
+
+    min-height: 40px;
+
+    padding: 12px 18px;
+
+    border-radius: 8px;
+
+    border: none;
+}
+
+.player-btn {
+    width: 70%;
+    font-size: 16px;
+}
+
+.board-btn {
+    background-color: #2E4158;
+    border: 1px solid #3A506B;
+
+    font-weight: bold;
+    font-size: 44px;
+}
+
+.board-btn:hover{
+    background-color: #3A506B;
+}
+
+.board-btn[data-mark="X"] {
+    color: #FF6B6B;
+}
+
+.board-btn[data-mark="O"] {
+    color: #4ECDC4;
+}
+
+.board-winner-btn{
+    background-color: #2F514D;
+    border: 1px solid #4E8F87;
 }

@@ -27,6 +27,7 @@ document.getElementById("player-o-btn").addEventListener("click", () => {
         renderBoard.generate();
 
         document.getElementById("control-btns").classList.remove("inactive");
+        document.getElementById("turn-announcement").classList.remove("inactive");
     }
 });
 
@@ -50,4 +51,5 @@ document.getElementById("change-players-btn").addEventListener("click", () => {
     document.getElementById("board").classList.add("inactive");
     document.getElementById("playerX").classList.remove("inactive");
     document.getElementById("control-btns").classList.add("inactive");
+    document.getElementById("turn-announcement").classList.add("inactive");
 });

@@ -21,7 +21,10 @@ const renderBoard = (function () {
 
     const placeMark = (row, col, mark) => {
         for (const button of document.querySelectorAll("#board button")) {
-            if (button.dataset.row == row && button.dataset.col == col) button.textContent = mark;
+            if (button.dataset.row == row && button.dataset.col == col) {
+                button.textContent = mark;
+                button.dataset.mark = mark
+            }
         }
     };
 
@@ -33,23 +36,40 @@ const renderBoard = (function () {
     const reset = () => {
         for (const button of document.querySelectorAll("#board button")) {
             button.disabled = false;
-            button.textContent = ""
+            button.textContent = "";
+            button.classList.remove("board-winner-btn");
         }
+
+        document.getElementById("turn-announcement-mark").textContent = "X";
     };
 
     const disableBoard = () => {
         for (const button of document.querySelectorAll("#board button")) {
             if (!button.disabled) button.disabled = true;
         }
-    }
+    };
+
+    const announceTurn = (mark) => {
+        document.getElementById("turn-announcement-mark").textContent = mark;
+        if (mark === "X") document.getElementById("turn-announcement-mark").style.color = "#FF6B6B";
+        else document.getElementById("turn-announcement-mark").style.color = "#4ECDC4";
+    };
 
     const updateResetBtn = () => {
         document.getElementById("reset-new-game-btn-label").textContent = "New Game";
-    }
+    };
 
     const remove = () => {
         document.getElementById("board").replaceChildren();
     };
 
-    return { generate, placeMark, showWinner, reset, remove, disableBoard, updateResetBtn };
+    const highlightWinner = (cells) => {
+        for (const button of document.querySelectorAll("#board button")) {
+            if (cells.some(([r, c]) => r == button.dataset.row && c == button.dataset.col)) {
+                button.classList.add("board-winner-btn");
+            }
+        }
+    };
+
+    return { generate, placeMark, showWinner, reset, remove, disableBoard, updateResetBtn, announceTurn, highlightWinner };
 })();
