@@ -457,4 +457,8 @@ footer {
         width: 300px;
         height: 180px;
     }
+
+    .winner-announcement{
+        max-width: 360px;
+    }
 }
