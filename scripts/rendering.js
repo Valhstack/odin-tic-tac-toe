@@ -1,6 +1,52 @@
 const renderBoard = (function () {
     const board = document.getElementById("board");
 
+    const WIN_PREFIXES = [
+        "🏆 ",
+        "🎉 ",
+        "🔥 ",
+        "💥 ",
+        "👏 ",
+        "🙌 ",
+        "✨ ",
+        "🎯 ",
+        "🚀 ",
+        "⚡ "
+    ];
+
+    const WIN_SUFFIXES = [
+        " takes the win!",
+        " wins the round!",
+        " comes out on top!",
+        " gets it done!",
+        " wins it!",
+        " pulls it off!",
+        " takes this one!",
+        " finishes it!",
+        " makes it happen!",
+        " closes it out!"
+    ];
+
+    const DRAW_PHRASES = [
+        "🤝 It’s a draw — perfectly matched!",
+        "⚖️ Total balance — draw!",
+        "🧩 Deadlock!",
+        "👏 No winner this time!"
+    ];
+
+    const SUB_LINES = [
+        "Ready for the rematch?",
+        "Run it back!",
+        "Think you can top that?",
+        "Another round awaits.",
+        "Switch sides and try again.",
+        "Can the result be changed?",
+        "Queue up the next battle.",
+        "Let’s go again!",
+        "Who wins the next one?",
+        "Don’t stop now."
+    ];
+
     const generate = () => {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
@@ -29,7 +75,21 @@ const renderBoard = (function () {
     };
 
     const showWinner = (winner) => {
-        document.getElementById("winner-dialog-text").textContent = winner === "Draw" ? "It's a draw" : `Winner is ${winner}`;
+        if (winner === "Draw") {
+            document.getElementById("winner-dialog-text").textContent = DRAW_PHRASES[Math.floor(Math.random() * DRAW_PHRASES.length)];
+        }
+        else {
+            document.getElementById("winner-dialog-pre-text").textContent = WIN_PREFIXES[Math.floor(Math.random() * WIN_PREFIXES.length)];
+
+            let winnerName = winner === "X" ? playerX.getPlayerName() : playerO.getPlayerName();
+
+            document.getElementById("winner-mark-dialog").textContent = winnerName;
+            document.getElementById("winner-dialog-text").textContent = WIN_SUFFIXES[Math.floor(Math.random() * WIN_SUFFIXES.length)];
+            winner === "X" ? document.getElementById("winner-mark-dialog").classList.add("turn-announcement-X") : document.getElementById("winner-mark-dialog").classList.add("turn-announcement-O");
+
+            document.getElementById("winner-subline-text").textContent = SUB_LINES[Math.floor(Math.random() * SUB_LINES.length)]
+        }
+
         document.getElementById("winner-dialog").showModal();
     };
 
@@ -51,12 +111,20 @@ const renderBoard = (function () {
 
     const announceTurn = (mark) => {
         document.getElementById("turn-announcement-mark").textContent = mark;
-        if (mark === "X") document.getElementById("turn-announcement-mark").style.color = "#FF6B6B";
-        else document.getElementById("turn-announcement-mark").style.color = "#4ECDC4";
+        if (mark === "X") {
+            document.getElementById("turn-announcement-mark").classList.remove("turn-announcement-O");
+            document.getElementById("turn-announcement-mark").classList.add("turn-announcement-X");
+        }
+        else {
+            document.getElementById("turn-announcement-mark").classList.add("turn-announcement-O");
+            document.getElementById("turn-announcement-mark").classList.remove("turn-announcement-X");
+        }
     };
 
     const updateResetBtn = () => {
         document.getElementById("reset-new-game-btn-label").textContent = "New Game";
+        document.getElementById("reset-new-game-btn").classList.remove("reset-game-btn");
+        document.getElementById("reset-new-game-btn").classList.add("new-game-btn");
     };
 
     const remove = () => {
