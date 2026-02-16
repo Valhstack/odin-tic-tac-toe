@@ -28,6 +28,12 @@ document.getElementById("player-o-btn").addEventListener("click", () => {
 
         document.getElementById("control-btns").classList.remove("inactive");
         document.getElementById("turn-announcement").classList.remove("inactive");
+
+        setTimeout(() => {
+            document.getElementById("results").classList.remove("inactive");
+        }, 500);
+
+        renderBoard.displayNames();
     }
 });
 
@@ -60,6 +66,8 @@ document.getElementById("change-players-btn").addEventListener("click", () => {
     renderBoard.reset();
     gameBoard.resetBoard();
     renderBoard.remove();
+
+    document.getElementById("results").classList.add("inactive");
 
     document.getElementById("board").classList.add("inactive");
     document.getElementById("playerX").classList.remove("inactive");

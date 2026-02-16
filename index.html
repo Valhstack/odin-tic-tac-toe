@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
     <title>Tic-Tac-Toe</title>
+    <link rel="icon" href="./images/favicon.ico" />
 </head>
 
 <body>
@@ -19,13 +20,13 @@
                 <button id="start-game" class="primary-btn">Start Game</button>
             </div>
 
-            <div id="playerX" class="set-player inactive">
+            <div id="playerX" class="set-player set-player-animation inactive">
                 <label for="player-x">Add player <span class="turn-announcement-X">X</span> name</label>
                 <input type="text" name="player-x" id="player-x">
                 <button id="player-x-btn" class="primary-btn player-btn" data-num="Enter">Create player</button>
             </div>
 
-            <div id="playerO" class="set-player inactive">
+            <div id="playerO" class="set-player inactive set-player-animation">
                 <label for="player-o">Add player <span class="turn-announcement-O">O</span> name</label>
                 <input type="text" name="player-o" id="player-o">
                 <button id="player-o-btn" class="primary-btn player-btn" data-num="Enter">Create player</button>
@@ -43,6 +44,21 @@
                         <button id="change-players-btn" class="control-btn change-pl-btn">Change players</button>
                     </div>
 
+                </div>
+            </div>
+
+            <div id="results" class="inactive gameResults">
+                <p class="text">SCOREBOARD</p>
+                <div class="scoreBoard">
+                    <div class="player-x-section">
+                        <p><span id="player-x-name"></span></p>
+                        <p class="scoreAnimation" id="x-score"><span id="player-x-score">0</span></p>
+                    </div>
+
+                    <div class="player-o-section">
+                        <p><span id="player-o-name"></span></p>
+                        <p class="scoreAnimation" id="o-score"><span id="player-o-score">0</span></p>
+                    </div>
                 </div>
             </div>
 
@@ -67,7 +83,8 @@
 
     <footer>
         <div class="full-attribution">
-            <p class="text" id="footerText">&#169; 2026 Copyright Valhstack</p>
+            <p id="attribution">Icons designed by <a href="http://www.freepik.com/">Freepik</a></p>
+            <p id="footerText">&#169; 2026 Copyright Valhstack</p>
         </div>
     </footer>
 

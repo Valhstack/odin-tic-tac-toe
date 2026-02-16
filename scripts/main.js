@@ -24,6 +24,8 @@ const gameBoard = (function () {
                 board[row][col] = "0";
             }
         }
+
+        game.resetTurn(game.getCurrentTurn());
     };
 
     return { getBoard, placeMark, returnMark, resetBoard };
@@ -44,6 +46,9 @@ const createPlayer = (name, mark) => {
 
 const game = (function () {
     let winner = "", endGame = false, currentTurn = "X";
+
+    const getCurrentTurn = () => currentTurn;
+    const resetTurn = (turn) => { if (turn === "O") currentTurn = "X"; };
 
     const hasWinner = (row, col) => {
         const board = gameBoard.getBoard();
@@ -73,7 +78,7 @@ const game = (function () {
         return null;
     };
 
-    const returnWinner = () => winner;
+    const getWinner = () => winner;
 
     const newTurn = (e) => {
         const row = Number(e.currentTarget.dataset.row);
@@ -107,14 +112,18 @@ const game = (function () {
     };
 
     const gameEnd = () => {
+        renderBoard.displayScore();
         renderBoard.disableBoard();
         renderBoard.updateResetBtn();
 
-        renderBoard.showWinner(winner);
+        setTimeout(() => {
+            renderBoard.showWinner(winner)
+        }, 300
+        )
 
         endGame = false;
     };
 
-    return { newTurn, hasWinner, returnWinner };
+    return { newTurn, hasWinner, getWinner, getCurrentTurn, resetTurn };
 
 })();

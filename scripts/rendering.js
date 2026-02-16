@@ -101,6 +101,8 @@ const renderBoard = (function () {
         }
 
         document.getElementById("turn-announcement-mark").textContent = "X";
+        document.getElementById("turn-announcement-mark").classList.remove("turn-announcement-O");
+        document.getElementById("turn-announcement-mark").classList.add("turn-announcement-X");
     };
 
     const disableBoard = () => {
@@ -139,5 +141,28 @@ const renderBoard = (function () {
         }
     };
 
-    return { generate, placeMark, showWinner, reset, remove, disableBoard, updateResetBtn, announceTurn, highlightWinner };
+    const displayNames = () => {
+        document.getElementById("player-x-name").textContent = playerX.getPlayerName();
+        document.getElementById("player-o-name").textContent = playerO.getPlayerName();
+
+        document.getElementById("player-x-name").classList.add("turn-announcement-X");
+        document.getElementById("player-o-name").classList.add("turn-announcement-O");
+    };
+
+    const displayScore = () => {
+        if (game.getWinner() === "X") {
+            document.getElementById("x-score").classList.remove("scoreAnimation");
+            void document.getElementById("x-score").offsetWidth;
+            document.getElementById("player-x-score").textContent = playerX.getWins();
+            document.getElementById("x-score").classList.add("scoreAnimation");
+        }
+        else if (game.getWinner() === "O") {
+            document.getElementById("o-score").classList.remove("scoreAnimation");
+            void document.getElementById("o-score").offsetWidth;
+            document.getElementById("player-o-score").textContent = playerO.getWins();
+            document.getElementById("o-score").classList.add("scoreAnimation");
+        }
+    };
+
+    return { generate, placeMark, showWinner, reset, remove, disableBoard, updateResetBtn, announceTurn, highlightWinner, displayNames, displayScore };
 })();
